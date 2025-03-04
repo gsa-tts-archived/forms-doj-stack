@@ -1,0 +1,45 @@
+version: 0.2
+
+env:
+  variables:
+    STACK_NAME: "my-cloudformation-stack"
+    TEMPLATE_FILE: "./node_modules/@gsa-tts/forms-infra-aws-cdk/dist/FormsPlatformStack.template.json"
+    TEMPLATE_DIR: "./node_modules/@gsa-tts/forms-infra-aws-cdk/dist/"
+  parameter-store:
+    AWS_REGION: "/codebuild/aws-region"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      - npm install # Ensures dependencies, including @gsa-tts/forms-infra-aws-cdk, are installed
+      - pip install --upgrade awscli
+
+  pre_build:
+    commands:
+      - echo "Authenticating with AWS..."
+      - aws sts get-caller-identity
+      - echo "Validating CloudFormation template..."
+      - aws cloudformation validate-template --template-body file://${TEMPLATE_FILE}
+
+  build:
+    commands:
+      - echo "Deploying CloudFormation stack: $STACK_NAME"
+      - aws cloudformation deploy \
+          --stack-name $STACK_NAME \
+          --template-file $TEMPLATE_FILE \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --parameter-overrides \
+              environment=$ENVIRONMENT \
+              imageUri=$IMAGE_URI \
+          --region $AWS_REGION \
+          --s3-bucket $ARTIFACT_BUCKET \
+          --s3-prefix cloudformation-assets \
+          --force-upload
+
+artifacts:
+  files:
+    - "${TEMPLATE_DIR}**/*" # Ensures additional required assets are preserved
+  discard-paths: no
