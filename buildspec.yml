@@ -26,9 +26,8 @@ phases:
 
   build:
     commands:
-      - echo "Deploying CloudFormation stack: $STACK_NAME"
-      - |
-        aws cloudformation deploy \
+      - echo "Deploying CloudFormation stack..."
+      - aws cloudformation deploy \
           --stack-name $STACK_NAME \
           --template-file $TEMPLATE_FILE \
           --capabilities CAPABILITY_NAMED_IAM \
