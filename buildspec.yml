@@ -5,8 +5,7 @@ env:
     STACK_NAME: "my-cloudformation-stack"
     TEMPLATE_FILE: "./node_modules/@gsa-tts/forms-infra-aws-cdk/dist/FormsPlatformStack.template.json"
     TEMPLATE_DIR: "./node_modules/@gsa-tts/forms-infra-aws-cdk/dist/"
-  parameter-store:
-    AWS_REGION: "/codebuild/aws-region"
+    AWS_REGION: "us-east-2"
 
 phases:
   install:
