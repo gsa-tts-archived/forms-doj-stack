@@ -13,8 +13,9 @@ phases:
       nodejs: 18
     commands:
       - echo "Installing dependencies..."
-      - npm install # Ensures dependencies, including @gsa-tts/forms-infra-aws-cdk, are installed
       - pip install --upgrade awscli
+      - cd server
+      - npm install # Ensures dependencies, including @gsa-tts/forms-infra-aws-cdk, are installed
 
   pre_build:
     commands:
