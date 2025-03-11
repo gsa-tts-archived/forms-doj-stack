@@ -7,7 +7,9 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsup src/* --format esm",
-    "build:image": "docker build --secret id=npmrc,src=.npmrc -t forms-server .",
+    "build:imageod": "docker build --secret id=npmrc,src=.npmrc -t forms-server .",
+    "build:image": "docker-compose build app",
+    "build:imagesdf": "IMAGE_ID=$(docker-compose images app | awk 'NR==2 {print $4}')",
     "clean": "rimraf dist tsconfig.tsbuildinfo coverage",
     "dev": "tsup src/* --watch  --format esm",
     "start": "node dist/index.js",
@@ -15,7 +17,7 @@
   },
   "dependencies": {
     "@gsa-tts/forms-database": "1.0.0-beta.1",
-    "@gsa-tts/forms-infra-aws-cdk": "1.0.0-beta.5",
+    "@gsa-tts/forms-infra-aws-cdk": "1.0.0-beta.6",
     "@gsa-tts/forms-infra-core": "1.0.0-beta.1",
     "@gsa-tts/forms-server": "1.0.0-beta.5"
   },
