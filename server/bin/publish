@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Check if required environment variables are set
+if [ -z "$AWS_ACCOUNT_ID" ] || [ -z "$ECR_REPO" ] || [ -z "$AWS_REGION" ]; then
+  echo "Error: AWS_ACCOUNT_ID, ECR_REPO, and AWS_REGION must be set."
+  exit 1
+fi
+
+# Build the Docker image
+docker-compose build app
+
+# Extract the image ID
+IMAGE_ID=$(docker-compose images app | awk 'NR==2 {print $4}')
+
+# Check if an image ID was found
+if [ -z "$IMAGE_ID" ]; then
+  echo "Error: No image found for 'app'."
+  exit 1
+fi
+
+echo "Extracted Image ID: $IMAGE_ID"
+
+# Authenticate with AWS ECR
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+#aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin public.ecr.aws
+
+# Tag the image for ECR
+docker tag ${IMAGE_ID} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:latest
+#docker tag ${IMAGE_ID} public.ecr.aws/c3w2w9z6/forms-platform:latest
+
+# Push the image to AWS ECR
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:latest
+#docker push public.ecr.aws/c3w2w9z6/forms-platform:latest
+
+echo "Image successfully pushed to AWS ECR!"
