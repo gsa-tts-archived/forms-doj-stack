@@ -6,9 +6,8 @@ RUN apt update && \
   apt install -y git
 WORKDIR /app
 COPY package.json package-lock.json ./
-#RUN NODE_ENV=production NPM_AUTH_TOKEN=${NPM_AUTH_TOKEN} npm ci
-RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
-  npm install
+RUN npm install
+#RUN npm ci
 COPY . .
 RUN npm run build
 

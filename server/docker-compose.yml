@@ -3,13 +3,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      secrets:
-        - npmrc
     ports:
       - "4321:4321"
-    secrets:
-      - npmrc
-
-secrets:
-  npmrc:
-    file: ~/.npmrc
