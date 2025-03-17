@@ -1,15 +1,22 @@
 FROM node:22-bookworm
 
-LABEL org.opencontainers.image.description DOJ Forms Platform
+LABEL org.opencontainers.image.description "DOJ Forms Platform"
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 RUN apt update && \
   apt install -y git
+
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-#RUN npm ci
+COPY package.json pnpm-lock.yaml ./
+
+# Use pnpm for dependency installation
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 ENV HOST=0.0.0.0
 ENV PORT=4321
