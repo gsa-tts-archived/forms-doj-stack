@@ -12,8 +12,8 @@ importers:
         specifier: 0.1.2
         version: 0.1.2
       '@gsa-tts/forms-infra-aws-cdk':
-        specifier: 0.1.7
-        version: 0.1.7
+        specifier: 0.1.8
+        version: 0.1.8
       '@gsa-tts/forms-infra-core':
         specifier: 0.1.2
         version: 0.1.2
@@ -534,8 +534,8 @@ packages:
   '@gsa-tts/forms-design@0.1.2':
     resolution: {integrity: sha512-1PDeTvDcW8/bwuNDWSznAGQnz3o5+Igcg+QKOJYr7sVbkn0eEk1tJPFmSFxfYwJsAyjqnROrZeAvUFTC98WIvQ==}
 
-  '@gsa-tts/forms-infra-aws-cdk@0.1.7':
-    resolution: {integrity: sha512-s8pkdR/RRNmgqOEkAKvFPOtvNqK1CCJzjeqdu9fBDGQKfr3IYzdfZL/lO2gNpJby326jv2codH0KYzs7lJ9Jdw==}
+  '@gsa-tts/forms-infra-aws-cdk@0.1.8':
+    resolution: {integrity: sha512-x8pwgxm8pv5orwExH1dF/Jmp3FgHATVXornvY6MSvPDAwCDd5vTu1F/tL+kHEtn0JnWOTN3G2+1Oo+vk0KNAsQ==}
     hasBin: true
 
   '@gsa-tts/forms-infra-core@0.1.2':
@@ -5620,7 +5620,7 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@gsa-tts/forms-infra-aws-cdk@0.1.7':
+  '@gsa-tts/forms-infra-aws-cdk@0.1.8':
     dependencies:
       '@aws-cdk/aws-apprunner-alpha': 2.182.0-alpha.0(aws-cdk-lib@2.182.0(constructs@10.4.2))(constructs@10.4.2)
       '@gsa-tts/forms-infra-core': 0.1.2
