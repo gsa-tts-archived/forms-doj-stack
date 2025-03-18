@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@gsa-tts/forms-database": "0.1.2",
-    "@gsa-tts/forms-infra-aws-cdk": "0.1.2",
+    "@gsa-tts/forms-infra-aws-cdk": "0.1.4",
     "@gsa-tts/forms-infra-core": "0.1.2",
     "@gsa-tts/forms-server": "0.1.2"
   },
