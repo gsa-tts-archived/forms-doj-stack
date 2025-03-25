@@ -50,5 +50,5 @@ async function getDatabaseUri() {
   }
   */
   const secret = JSON.parse(secrets.dbSecret || '{}');
-  return `postgresql://${secret.username}:${secret.password}@${secret.dbHost}:${secret.dbPort}/${secret.dbName}`;
+  return `postgresql://${secret.username}:${secret.password}@${secret.host}:${secret.port}/${secret.dbname}`;
 };
