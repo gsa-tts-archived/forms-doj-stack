@@ -29,23 +29,26 @@ async function getDatabaseUri() {
     dbHost: process.env.DB_HOST,
     dbPort: process.env.DB_PORT,
     dbName: process.env.DB_NAME,
+    dbSecret: process.env.DB_SECRET,
     dbSecretArn: process.env.DB_SECRET_ARN,
   };
   if (
     secrets.dbHost === undefined ||
     secrets.dbPort === undefined ||
     secrets.dbName === undefined ||
-    secrets.dbSecretArn === undefined
+    (secrets.dbSecret === undefined && secrets.dbSecretArn === undefined)
   ) {
     return;
   }
 
   const vault = getAWSSecretsManagerVault();
+  /*
   const dbSecret = await vault.getSecret(secrets.dbSecretArn);
   if (dbSecret === undefined) {
     console.error("Error getting secret:", secrets.dbSecretArn);
     return;
   }
-  const secret = JSON.parse(dbSecret);
+  */
+  const secret = JSON.parse(secrets.dbSecret || '{}');
   return `postgresql://${secret.username}:${secret.password}@${secret.dbHost}:${secret.dbPort}/${secret.dbName}`;
 };
