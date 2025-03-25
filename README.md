@@ -37,7 +37,27 @@ To initialize CI/CD, deploy the `FormsPipelineStack` with the corresponding AWS 
 
 ```bash
 cd server/node_modules/@gsa-tts/forms-infra-aws-cdk
-pnpm cdk deploy --ci FormsPipelineStack --parameters "codeConnectionArn=arn:aws:codeconnections:${AWS_REGION}:${AWS_ACCOUNT_ID}:connection/${AWS_CODE_CONNECTION_ARN}"
+pnpm cdk deploy \
+  --ci FormsPipelineStack \
+  --parameters "codeConnectionArn=arn:aws:codeconnections:${AWS_REGION}:${AWS_ACCOUNT_ID}:connection/${AWS_CODE_CONNECTION_ARN}"
+```
+
+### Deploy database stack
+
+```bash
+pnpm cdk deploy --ci FormsDatabaseStack
+```
+
+### Deploy platform stack
+
+```bash
+cd server/node_modules/@gsa-tts/forms-infra-aws-cdk
+pnpm cdk deploy \
+  --ci FormsPlatformStack \
+  --parameters repositoryArn=arn:aws:ecr:${AWS_REGION}:${AWS_ACCOUNT_ID}:repository/forms-platform \
+  --parameters tagOrDigest=latest \
+  --parameters environment=dev \
+  --parameters repositoryName=forms-platform
 ```
 
 ## Old stuff (to be removed or updated)
