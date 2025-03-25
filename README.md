@@ -19,6 +19,29 @@ This repository defines a demo cloud configuration for Forms Platform, using DOJ
 
 ## Management
 
+### CodeBuild IAM policy
+
+Follow the instructions in the AWS documentation to create a policy for CodeBuild:
+
+https://docs.aws.amazon.com/codebuild/latest/userguide/setting-up-service-role.html
+
+### CodeConnection resource
+
+To initialize the deployment, you must manually create an AWS CodeConnection pointing to the git repository where this project is stored.
+
+### Create build pipeline
+
+Next, you must deploy the AWS CDK stack, `FormsPipelineStack`, which creates an AWS CodeBuild project that will pull this repository, build and push a Docker image to ECR, and deploy via a second CDK stack, `FormsPlatformStack`.
+
+To initialize CI/CD, deploy the `FormsPipelineStack` with the corresponding AWS CodeConnection ARN:
+
+```bash
+cd server/node_modules/@gsa-tts/forms-infra-aws-cdk
+pnpm cdk deploy --ci FormsPipelineStack --parameters "codeConnectionArn=arn:aws:codeconnections:${AWS_REGION}:${AWS_ACCOUNT_ID}:connection/${AWS_CODE_CONNECTION_ARN}"
+```
+
+## Old stuff (to be removed or updated)
+
 ### Publish image
 
 To publish an image, build and push the docker image to a private ECR repository.
